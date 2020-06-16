@@ -1,8 +1,10 @@
-package com.example.dnpa_sensorproyect;
+package com.example.dnpa_sensorproyect.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.dnpa_sensorproyect.R;
 
 public class MainActivity extends AppCompatActivity {
 
