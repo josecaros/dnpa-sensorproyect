@@ -7,6 +7,7 @@ public class GPSLocation {
     private double latitud;
     private double velocidad;
 
+    public GPSLocation(){}
     public GPSLocation(double longitud, double latitud, double velocidad){
         this.longitud = longitud;
         this.latitud = latitud;
