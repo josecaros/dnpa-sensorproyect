@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         unregisterReceiver(gps);
-
     }
 
     public boolean checkLocationPermission() {
@@ -59,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
                         Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION},
                 MY_PERMISSIONS_REQUEST_LOCATION);
-
         return true;
     }
 
@@ -74,9 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     // location-related task you need to do.
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
-
                         initGPS();
-
                     }
                 } else {
                     // permission denied, boo! Disable the

@@ -5,10 +5,12 @@ import androidx.annotation.NonNull;
 public class GPSLocation {
     private double longitud;
     private double latitud;
+    private double velocidad;
 
-    public GPSLocation(double longitud, double latitud){
+    public GPSLocation(double longitud, double latitud, double velocidad){
         this.longitud = longitud;
         this.latitud = latitud;
+        this.velocidad = velocidad;
     }
 
     public double getLongitud() {
@@ -25,6 +27,14 @@ public class GPSLocation {
 
     public void setLatitud(double latitud) {
         this.latitud = latitud;
+    }
+
+    public double getVelocidad() {
+        return velocidad;
+    }
+
+    public void setVelocidad(double velocidad) {
+        this.velocidad = velocidad;
     }
 
     @NonNull

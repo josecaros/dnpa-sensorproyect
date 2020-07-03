@@ -29,7 +29,7 @@ public class ControladorGPS  extends BroadcastReceiver {
             double speed = location.getSpeed();
 
             //almacenamos los valores de la longitud y latitud en un arreglo de GPSLocation
-            ubicaciones.add(new GPSLocation(longitude, latitude));
+            ubicaciones.add(new GPSLocation(longitude, latitude, speed));
 
             Log.d(TAG,  ubicaciones.get(0).getLatitud()+","+ ubicaciones.get(0).getLongitud());
             Toast.makeText(context, ubicaciones.get(0).getLatitud()+","+ubicaciones.get(0).getLatitud(), Toast.LENGTH_LONG).show();
@@ -45,7 +45,7 @@ public class ControladorGPS  extends BroadcastReceiver {
             double speed = location.getSpeed();
 
             //almacenamos los valores de la longitud y latitud en un arreglo de GPSLocation
-            ubicaciones.add(new GPSLocation(longitude, latitude));
+            ubicaciones.add(new GPSLocation(longitude, latitude, speed));
 
             Log.d(TAG,  ubicaciones.get(0).getLatitud()+","+ ubicaciones.get(0).getLongitud());
             Toast.makeText(context, ubicaciones.get(0).getLatitud()+","+ubicaciones.get(0).getLatitud(), Toast.LENGTH_LONG).show();
@@ -61,7 +61,7 @@ public class ControladorGPS  extends BroadcastReceiver {
             double speed = location.getSpeed();
 
             //almacenamos los valores de la longitud y latitud en un arreglo de GPSLocation
-            ubicaciones.add(new GPSLocation(longitude, latitude));
+            ubicaciones.add(new GPSLocation(longitude, latitude, speed));
 
             Log.d(TAG,  ubicaciones.get(0).getLatitud()+","+ ubicaciones.get(0).getLongitud());
             Toast.makeText(context, ubicaciones.get(0).getLatitud()+","+ubicaciones.get(0).getLatitud(), Toast.LENGTH_LONG).show();
@@ -75,12 +75,16 @@ public class ControladorGPS  extends BroadcastReceiver {
             double speed = location.getSpeed();
 
             //almacenamos los valores de la longitud y latitud en un arreglo de GPSLocation
-            ubicaciones.add(new GPSLocation(longitude, latitude));
+            ubicaciones.add(new GPSLocation(longitude, latitude, speed));
 
             Log.d(TAG,  ubicaciones.get(0).getLatitud()+","+ ubicaciones.get(0).getLongitud());
             Toast.makeText(context, ubicaciones.get(0).getLatitud()+","+ubicaciones.get(0).getLatitud(), Toast.LENGTH_LONG).show();
-
         }
-
     }
+
+    public GPSLocation get(){
+
+        return null;
+    }
+
 }
