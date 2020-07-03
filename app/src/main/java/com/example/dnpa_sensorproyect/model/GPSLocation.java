@@ -3,23 +3,27 @@ package com.example.dnpa_sensorproyect.model;
 import androidx.annotation.NonNull;
 
 public class GPSLocation {
-    private String longitud;
-    private String latitud;
-    public GPSLocation(){}
+    private double longitud;
+    private double latitud;
 
-    public String getLongitud() {
+    public GPSLocation(double longitud, double latitud){
+        this.longitud = longitud;
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(String longitud) {
+    public void setLongitud(double longitud) {
         this.longitud = longitud;
     }
 
-    public String getLatitud() {
+    public double getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(String latitud) {
+    public void setLatitud(double latitud) {
         this.latitud = latitud;
     }
 

@@ -11,4 +11,5 @@ public class VistaInicial extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_inicial);
     }
+
 }
