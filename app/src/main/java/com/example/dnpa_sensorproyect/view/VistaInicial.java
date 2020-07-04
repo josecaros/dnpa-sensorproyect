@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -51,6 +52,7 @@ public class VistaInicial extends AppCompatActivity {
             public void onClick(View v) {
                 checkLocationPermission();
                 initAcelerometer();
+                //initOrientation();
                 enableOptions();
             }
         });
@@ -61,6 +63,7 @@ public class VistaInicial extends AppCompatActivity {
                 disableOptions();
             }
         });
+
         miUbicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +71,12 @@ public class VistaInicial extends AppCompatActivity {
             }
         });
 
+
+
+        /*if(acceListener.getisFlat()){
+            sensorManager.unregisterListener(acceListener,sensor);
+            disableOptions();
+        }*/
 
 
     }
@@ -144,14 +153,20 @@ public class VistaInicial extends AppCompatActivity {
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
         acceListener = new ControladorAceleracion();
         sensorManager.registerListener(acceListener, sensor,SensorManager.SENSOR_DELAY_NORMAL);
+
     }
+
+    private void initOrientation(){
+
+    }
+
     private void enableOptions(){
         startApp.setEnabled(false);
         stopApp.setEnabled(true);
         miUbicacion.setEnabled(true);
         listaUbicaciones.setEnabled(true);
     }
-    private void disableOptions(){
+    public void disableOptions(){
         startApp.setEnabled(true);
         stopApp.setEnabled(false);
         miUbicacion.setEnabled(false);
