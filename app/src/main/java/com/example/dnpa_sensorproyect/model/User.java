@@ -8,6 +8,10 @@ public class User {
     private ArrayList<GPSLocation> place;
 
     public User(){}
+    public User(String userID, String email){
+        this.userID=userID;
+        this.email=email;
+    }
 
     public String getUserID() {
         return userID;

@@ -8,12 +8,13 @@ import android.location.LocationManager;
 import android.util.Log;
 import android.widget.Toast;
 import com.example.dnpa_sensorproyect.model.GPSLocation;
+import com.example.dnpa_sensorproyect.view.VistaInicial;
+
 import java.util.ArrayList;
 
 
 public class ControladorGPS  extends BroadcastReceiver {
-    private GPSLocation ubicacion = new GPSLocation();
-    private String TAG = "LocationBroadcastReceiver";
+    private String TAG = "ControladorGPS";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -22,30 +23,27 @@ public class ControladorGPS  extends BroadcastReceiver {
         if (intent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
             locationKey = LocationManager.KEY_LOCATION_CHANGED;
         }
-
         else if (intent.hasExtra(LocationManager.KEY_PROVIDER_ENABLED)) {
             locationKey = LocationManager.KEY_PROVIDER_ENABLED;
         }
-
         else if (intent.hasExtra(LocationManager.KEY_PROXIMITY_ENTERING)) {
             locationKey = LocationManager.KEY_PROXIMITY_ENTERING;
         }
-
         else if (intent.hasExtra(LocationManager.KEY_STATUS_CHANGED)) {
             locationKey = LocationManager.KEY_STATUS_CHANGED;
         }
         Location location = (Location) intent.getExtras().get(locationKey);
-        ubicacion.setLatitud(location.getLatitude());
-        ubicacion.setLongitud(location.getLongitude());
-        ubicacion.setVelocidad(location.getSpeed());
+        VistaInicial.ubic.setLatitud(location.getLatitude());
+        VistaInicial.ubic.setLongitud(location.getLongitude());
+        VistaInicial.ubic.setVelocidad(location.getSpeed());
     }
 
-    public GPSLocation getLocation(){
-        GPSLocation ubicacion = new GPSLocation();
-        ubicacion.setLatitud(this.ubicacion.getLatitud());
-        ubicacion.setLongitud(this.ubicacion.getLongitud());
-        ubicacion.setVelocidad(this.ubicacion.getVelocidad());
-        return ubicacion;
+    public static GPSLocation obtenerUbicacion(){
+        GPSLocation locate = new GPSLocation();
+        locate.setLatitud(VistaInicial.ubic.getLatitud());
+        locate.setLongitud(VistaInicial.ubic.getLongitud());
+        locate.setVelocidad(VistaInicial.ubic.getVelocidad());
+        return locate;
     }
 
 }
