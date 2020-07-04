@@ -24,9 +24,11 @@ import com.example.dnpa_sensorproyect.R;
 import com.example.dnpa_sensorproyect.controller.ControladorAceleracion;
 import com.example.dnpa_sensorproyect.controller.ControladorGPS;
 import com.example.dnpa_sensorproyect.model.GPSLocation;
+import com.example.dnpa_sensorproyect.model.User;
 
 public class VistaInicial extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    public static User usuario = new User();
     private static final String TAG = "VistaInicial";
     private SensorManager sensorManager;
     private Sensor sensor;
@@ -67,12 +69,7 @@ public class VistaInicial extends AppCompatActivity {
                 info.setText(ControladorGPS.obtenerUbicacion()+"");
             }
         });
-
-
-
     }
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -156,5 +153,14 @@ public class VistaInicial extends AppCompatActivity {
         stopApp.setEnabled(false);
         miUbicacion.setEnabled(false);
         listaUbicaciones.setEnabled(false);
+    }
+    private void regUser(){
+        Bundle parametros = this.getIntent().getExtras();
+        if(parametros!=null) {
+            String usuario = getIntent().getExtras().getString("idUser");
+            String email = getIntent().getExtras().getString("email");
+            this.usuario.setEmail(email);
+            this.usuario.setUserID(usuario);
+        }
     }
 }

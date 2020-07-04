@@ -7,10 +7,13 @@ public class User {
     private String email;
     private ArrayList<GPSLocation> place;
 
-    public User(){}
+    public User(){
+        place=new ArrayList<>();
+    }
     public User(String userID, String email){
         this.userID=userID;
         this.email=email;
+        place=new ArrayList<>();
     }
 
     public String getUserID() {
