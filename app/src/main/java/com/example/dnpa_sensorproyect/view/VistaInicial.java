@@ -29,31 +29,42 @@ public class VistaInicial extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private static final String TAG = "VistaInicial";
     private SensorManager sensorManager;
+    private Sensor sensor;
+    private ControladorAceleracion acceListener;
     private ControladorGPS gps;
-    private ControladorAceleracion aceleracion;
     public static GPSLocation ubic = new GPSLocation();
-    Button startApp, stopApp;
+    Button startApp, stopApp,miUbicacion,listaUbicaciones;
     TextView info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_inicial);
-
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        aceleracion = new ControladorAceleracion(sensorManager);
-
-        Log.w("",aceleracion.getAcelTotal() + "");
-
         startApp= (Button)findViewById(R.id.startApp);
         stopApp=(Button)findViewById(R.id.stopApp);
+        miUbicacion=(Button)findViewById(R.id.miUbicacion);
+        listaUbicaciones=(Button)findViewById(R.id.listaUbicaciones);
         info=(TextView)findViewById(R.id.testText);
-        checkLocationPermission();
+
         startApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                checkLocationPermission();
+                initAcelerometer();
+                enableOptions();
+            }
+        });
+        stopApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sensorManager.unregisterListener(acceListener,sensor);
+                disableOptions();
+            }
+        });
+        miUbicacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 info.setText(ControladorGPS.obtenerUbicacion()+"");
-
             }
         });
 
@@ -77,6 +88,7 @@ public class VistaInicial extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        //unregisterReceiver(gps);
     }
 
     public boolean checkLocationPermission() {
@@ -126,5 +138,23 @@ public class VistaInicial extends AppCompatActivity {
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, pendingIntent);
+    }
+    private void initAcelerometer(){
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+        acceListener = new ControladorAceleracion();
+        sensorManager.registerListener(acceListener, sensor,SensorManager.SENSOR_DELAY_NORMAL);
+    }
+    private void enableOptions(){
+        startApp.setEnabled(false);
+        stopApp.setEnabled(true);
+        miUbicacion.setEnabled(true);
+        listaUbicaciones.setEnabled(true);
+    }
+    private void disableOptions(){
+        startApp.setEnabled(true);
+        stopApp.setEnabled(false);
+        miUbicacion.setEnabled(false);
+        listaUbicaciones.setEnabled(false);
     }
 }

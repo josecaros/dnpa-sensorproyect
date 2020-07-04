@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("idUser", idUser.getText().toString());
                 intent.putExtra("email", email.getText().toString());
                 startActivityForResult(intent, 0);
+                finish();
             }
         });
     }

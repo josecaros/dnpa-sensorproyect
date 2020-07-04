@@ -8,45 +8,44 @@ import android.os.SystemClock;
 import android.util.Log;
 
 public class ControladorAceleracion implements SensorEventListener {
-
+    private static final String TAG ="ControladorAceleracion";
     private SensorManager sensorManager;
     private Sensor sensor;
     private SensorEventListener listener;
     private float[] acelLineal;
-    private float acelTotal;
-    private float tiempoTranscurrido;
+    private double vInicial=0;
+    private long time;
+    private long lastTime;
 
-    public ControladorAceleracion(SensorManager sensorManager){
-        this.sensorManager = sensorManager;
-        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-    }
+
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        float[] tmpAcel;
-        float aTotal;
 
-        tmpAcel = event.values.clone();
-        //Calcular aceleracion lineal
         //obtenemos la aceleracion lineal sin la gravedad
         acelLineal = obtenerAceleracionLineal(event);
 
+        //Tiempo transcurrido
+        time=System.currentTimeMillis();
+        long interval = time - lastTime;
+        lastTime=time;
+        double estimado = ((double)interval)/1000;
+
         //Calcular aceleracion total
-        acelTotal = calcularAceleracionTotal(acelLineal);
+        float linearAccTotal =calcularAceleracionTotal(acelLineal);
 
-        //tiempo transcurrido en nanosegundos
-        tiempoTranscurrido = SystemClock.elapsedRealtimeNanos();
 
+        double velocidad = vInicial+ (double)linearAccTotal*estimado;
         //imprimir en consola
-        String msg = "Tiempo transcurrido: " + SystemClock.elapsedRealtime()*0.0001 + ", Aceleracion X: "
-                + acelLineal[0] + ", Aceleracion Y: " + acelLineal[1] + ", Aceleracion Z: " + acelLineal[2]
-                + ", Aceleracion Total: " + acelTotal;
+        Log.i("aceleracionLinealTotal",linearAccTotal+"");
+        Log.i("Tiempo transcurrido",estimado+"");
+
+        Log.i("Velocidad",velocidad+"");
 
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
 
     private float[] obtenerAceleracionLineal(SensorEvent event){
@@ -76,7 +75,4 @@ public class ControladorAceleracion implements SensorEventListener {
         return acelLineal;
     }
 
-    public float getAcelTotal(){
-        return acelTotal;
-    }
 }
