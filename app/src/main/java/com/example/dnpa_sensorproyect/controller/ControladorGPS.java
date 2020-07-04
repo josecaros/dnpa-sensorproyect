@@ -8,7 +8,7 @@ import android.location.LocationManager;
 import android.util.Log;
 import android.widget.Toast;
 import com.example.dnpa_sensorproyect.model.GPSLocation;
-import com.example.dnpa_sensorproyect.view.VistaInicial;
+import com.example.dnpa_sensorproyect.view.*;
 
 import java.util.ArrayList;
 

@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,20 +21,29 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.dnpa_sensorproyect.R;
+import com.example.dnpa_sensorproyect.controller.ControladorAceleracion;
 import com.example.dnpa_sensorproyect.controller.ControladorGPS;
 import com.example.dnpa_sensorproyect.model.GPSLocation;
 
 public class VistaInicial extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private static final String TAG = "VistaInicial";
+    private SensorManager sensorManager;
     private ControladorGPS gps;
+    private ControladorAceleracion aceleracion;
     public static GPSLocation ubic = new GPSLocation();
     Button startApp, stopApp;
     TextView info;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_inicial);
+
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        aceleracion = new ControladorAceleracion(sensorManager);
+
+        Log.w("",aceleracion.getAcelTotal() + "");
 
         startApp= (Button)findViewById(R.id.startApp);
         stopApp=(Button)findViewById(R.id.stopApp);
@@ -42,8 +53,12 @@ public class VistaInicial extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 info.setText(ControladorGPS.obtenerUbicacion()+"");
+
             }
         });
+
+
+
     }
 
 
