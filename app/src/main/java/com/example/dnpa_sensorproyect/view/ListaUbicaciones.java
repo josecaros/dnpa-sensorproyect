@@ -3,6 +3,7 @@ package com.example.dnpa_sensorproyect.view;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.dnpa_sensorproyect.R;
+import com.example.dnpa_sensorproyect.controller.BluetoothTransfer;
 import com.example.dnpa_sensorproyect.model.GPSLocation;
 
 import java.util.ArrayList;
@@ -39,7 +41,10 @@ public class ListaUbicaciones extends AppCompatActivity {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         AdapterView.AdapterContextMenuInfo info =(AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         if(item.getItemId()== R.id.compartirBlue){
-            //Compartir
+            GPSLocation aux = VistaInicial.usuario.getPlace().get(info.position);
+            Intent intent=new Intent(this, BluetoothTransfer.class);
+            intent.putExtra("Ubicacion", "Latitud: "+aux.getLatitud()+"\t"+"Longitud: "+aux.getLongitud());
+            startActivityForResult(intent,0);
         }
         return super.onContextItemSelected(item);
     }

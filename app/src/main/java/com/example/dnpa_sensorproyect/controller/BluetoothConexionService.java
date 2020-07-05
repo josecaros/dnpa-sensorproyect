@@ -17,7 +17,7 @@ public class BluetoothConexionService {
     private static final String appName="myAPP";
     private static final UUID MY_UUID_INSECURE= UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
     private final BluetoothAdapter mBluetoothAdapter;
-    Context context;
+    Context mContext;
     private AcceptedThread mInsecureAcceptThread;
     private ConnectThread mConnectThread;
     private BluetoothDevice mmDevice;
@@ -26,7 +26,7 @@ public class BluetoothConexionService {
 
     public BluetoothConexionService(Context context) {
         this.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        this.context=context;
+        this.mContext =context;
     }
 
     private class AcceptedThread extends Thread{
@@ -56,7 +56,7 @@ public class BluetoothConexionService {
                 Log.e(TAG, "AcceptThread: IOExeption: "+e.getMessage());
             }
             if(socket != null){
-                connected(socket,device);
+                //connected(socket,device);
             }
             Log.d(TAG, "END AcceptedThread");
 
@@ -73,7 +73,7 @@ public class BluetoothConexionService {
         }
     }
 
-    private class ConnectThread{
+    private class ConnectThread extends Thread{
         private BluetoothSocket mmSocket;
         @SuppressLint("LongLogTag")
         public ConnectThread(BluetoothDevice device, UUID uuid){
@@ -106,7 +106,7 @@ public class BluetoothConexionService {
                     Log.e(TAG, "mConnectedThread: run: Unable to close conection socket"+ ex.getMessage());
                 }
             }
-            connected(mmSocket,mmDevice);
+            //connected(mmSocket,mmDevice);
         }
 
         public void cancel(){
@@ -116,7 +116,10 @@ public class BluetoothConexionService {
 
             }
         }
+
+
     }
+
 
     public synchronized void start(){
         if(mConnectThread!=null){
@@ -128,6 +131,15 @@ public class BluetoothConexionService {
             mInsecureAcceptThread.start();
         }
     }
+    @SuppressLint("LongLogTag")
+    public void startClient(BluetoothDevice device, UUID uuid){
+        Log.d(TAG, "StartClient: Started");
+        mProgressDialog = ProgressDialog.show(mContext,"Conexion Bluetooth", "Espere", true);
+        mConnectThread = new ConnectThread(device,uuid);
+        mConnectThread.start();
+    }
 
-    
+
+
+
 }
