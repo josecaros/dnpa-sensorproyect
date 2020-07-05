@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.example.dnpa_sensorproyect.R;
 import com.example.dnpa_sensorproyect.controller.ControladorAceleracion;
 import com.example.dnpa_sensorproyect.controller.ControladorGPS;
+import com.example.dnpa_sensorproyect.controller.ControladorOrientacion;
 import com.example.dnpa_sensorproyect.model.GPSLocation;
 import com.example.dnpa_sensorproyect.model.User;
 
@@ -34,6 +35,7 @@ public class VistaInicial extends AppCompatActivity {
     private SensorManager sensorManager;
     private Sensor sensor;
     private ControladorAceleracion acceListener;
+    private ControladorOrientacion orientListener;
     private ControladorGPS gps;
     public static GPSLocation ubic = new GPSLocation();
     Button startApp, stopApp,miUbicacion,listaUbicaciones;
@@ -54,7 +56,7 @@ public class VistaInicial extends AppCompatActivity {
             public void onClick(View v) {
                 checkLocationPermission();
                 initAcelerometer();
-                //initOrientation();
+                initOrientation();
                 enableOptions();
             }
         });
@@ -162,6 +164,10 @@ public class VistaInicial extends AppCompatActivity {
     }
 
     private void initOrientation(){
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+        orientListener = new ControladorOrientacion(this);
+        sensorManager.registerListener(orientListener, sensor,SensorManager.SENSOR_DELAY_NORMAL);
 
     }
 
