@@ -31,11 +31,12 @@ public class ControladorOrientacion extends AppCompatActivity implements SensorE
         aceleracion =obtenerAceleracionLineal(event);
 
         //cambiar disposicion de la pantalla usando los ejes X y Y
-        if( (aceleracion[1]>-Math.sin(30) && aceleracion[1]<Math.sin(30)) || aceleracion[0] > Math.cos(30) ){
+        if( (aceleracion[0]>-Math.sin(30) || aceleracion[0]<Math.sin(30)) && aceleracion[1] < -Math.cos(30) ){
+            vista.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        }else if( (aceleracion[0] > Math.cos(30)) && (aceleracion[1]>-Math.sin(30) || aceleracion[1]<Math.sin(30)) ){
             vista.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        }else if( (aceleracion[0] < -Math.cos(30)) || (aceleracion[1]>-Math.sin(30) && aceleracion[1]<Math.sin(30)) ){
-            vista.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
 
     }
