@@ -73,6 +73,14 @@ public class VistaInicial extends AppCompatActivity {
             }
         });
 
+        listaUbicaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ListaUbicaciones.class);
+                startActivityForResult(intent,0);
+            }
+        });
+
         /*if(acceListener.getisFlat()){
             sensorManager.unregisterListener(acceListener,sensor);
             disableOptions();

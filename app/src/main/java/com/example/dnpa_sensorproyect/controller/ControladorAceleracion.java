@@ -122,6 +122,6 @@ public class ControladorAceleracion implements SensorEventListener {
         }
         return false;
     }
-    
+
 
 }
