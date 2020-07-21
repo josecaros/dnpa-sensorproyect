@@ -31,10 +31,8 @@ public class ControladorAceleracion implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-
         //obtenemos la aceleracion lineal sin la gravedad
         acelLineal =obtenerAceleracionLineal(event);
-
         //Tiempo transcurrido
         time=System.currentTimeMillis();
         long interval = time - lastTime;
@@ -45,15 +43,10 @@ public class ControladorAceleracion implements SensorEventListener {
         }else{
             totalTime = totalTime+estimado;
         }
-
-
         //Calcular aceleracion total
         double linearAccTotal =(double)calcularAceleracionTotal(acelLineal);
-
         double velocidad = vInicial+ (double)linearAccTotal*estimado;
-
         isFlat = isFlat(event);
-
         //imprimir en consola
         if(totalTime>5 && linearAccTotal<10){
             miUbicacion=ControladorGPS.obtenerUbicacion();
@@ -65,7 +58,7 @@ public class ControladorAceleracion implements SensorEventListener {
                 GPSLocation anteriorUbicacion = VistaInicial.usuario.getPlace().get(VistaInicial.usuario.getPlace().size()-1);
                 double diferenciaLongitud = Math.abs(miUbicacion.getLongitud()-anteriorUbicacion.getLongitud());
                 double diferenciaLatitud = Math.abs(miUbicacion.getLatitud()-anteriorUbicacion.getLatitud());
-                if((diferenciaLatitud>0.002||diferenciaLongitud>0.002) && miUbicacion.getVelocidad()<5000){
+                if((diferenciaLatitud>0.002||diferenciaLongitud>0.002) && miUbicacion.getVelocidad()<2000){
                     VistaInicial.usuario.getPlace().add(miUbicacion);
                 }
                 totalTime=0;

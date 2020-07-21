@@ -45,7 +45,14 @@ public class ListaUbicaciones extends AppCompatActivity {
             Intent intent=new Intent(this, BluetoothTransfer.class);
             intent.putExtra("Ubicacion", "Latitud: "+aux.getLatitud()+"\t"+"Longitud: "+aux.getLongitud());
             startActivityForResult(intent,0);
-        }
+        } else if (item.getItemId() == R.id.addClip) {
+            Intent intent = new Intent(this, MicrophoneActivity.class);
+            startActivityForResult(intent,100);
+
+        }else if (item.getItemId()==R.id.addPhoto){
+            Intent intent = new Intent(this, Camera2.class);
+            startActivityForResult(intent,200);
+        }else{}
         return super.onContextItemSelected(item);
     }
 
