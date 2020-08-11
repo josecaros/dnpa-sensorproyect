@@ -22,6 +22,7 @@ import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -36,6 +37,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.dnpa_sensorproyect.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -66,6 +72,8 @@ public class Camera2 extends AppCompatActivity {
     private Size imageDimension;
     private ImageReader imageReader;
 
+    private StorageReference mStorageRef;
+
     private File file;
     private static final int REQUEST_CAMERA_PERMISSION = 200;
     private boolean nFlashSupported;
@@ -94,6 +102,7 @@ public class Camera2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera2);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         capturarCamera = (Button)findViewById(R.id.capture);
         camera = (TextureView)findViewById(R.id.vistaCamara);
         foto = (ImageView) findViewById(R.id.lastPhoto);
@@ -211,6 +220,7 @@ public class Camera2 extends AppCompatActivity {
                     if(file!=null){
                         Bitmap img = BitmapFactory.decodeFile(file.getAbsolutePath());
                         foto.setImageBitmap(img);
+                        subirImagen(file);
                     }
 
                 }catch (Exception e){
@@ -219,6 +229,27 @@ public class Camera2 extends AppCompatActivity {
             }
         }, msegs);
 
+    }
+
+    private void subirImagen(File file){
+        Uri uri_file = Uri.fromFile(file.getAbsoluteFile());
+        StorageReference imgRef = mStorageRef.child("Usuario").child("Fotos").child(uri_file.getLastPathSegment());
+
+        imgRef.putFile(uri_file)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get a URL to the uploaded content
+                        Toast.makeText(Camera2.this, "Foto subida correctamente.", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        // ...
+                    }
+                });
     }
 
     private void createCameraPreview() {

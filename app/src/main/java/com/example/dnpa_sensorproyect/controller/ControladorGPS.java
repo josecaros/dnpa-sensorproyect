@@ -7,11 +7,17 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
 import com.example.dnpa_sensorproyect.model.GPSLocation;
 import com.example.dnpa_sensorproyect.view.*;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
-
 
 public class ControladorGPS  extends BroadcastReceiver {
     private String TAG = "ControladorGPS";
@@ -36,6 +42,8 @@ public class ControladorGPS  extends BroadcastReceiver {
         VistaInicial.ubic.setLatitud(location.getLatitude());
         VistaInicial.ubic.setLongitud(location.getLongitude());
         VistaInicial.ubic.setVelocidad(location.getSpeed());
+
+
     }
 
     public static GPSLocation obtenerUbicacion(){

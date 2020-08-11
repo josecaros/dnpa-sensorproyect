@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "760366624157",
+    "firebase_url": "https://dnpa-sensorproyect.firebaseio.com",
+    "project_id": "dnpa-sensorproyect",
+    "storage_bucket": "dnpa-sensorproyect.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760366624157:android:b9fa405b4cf4a21864d374",
+        "android_client_info": {
+          "package_name": "com.example.dnpa_sensorproyect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760366624157-3j866j42g5ov4t5gd9oqutvnsmhj6mn6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dnpa_sensorproyect",
+            "certificate_hash": "05212955cd4ec983252f28e89bd35c3bbacceea4"
+          }
+        },
+        {
+          "client_id": "760366624157-6t4u1c5gbnlb8hp63u0eq3a1jaioaoef.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEaWDr6PI9kMHB8BlmOkaWS9ZX-qYLPMI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "760366624157-6t4u1c5gbnlb8hp63u0eq3a1jaioaoef.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

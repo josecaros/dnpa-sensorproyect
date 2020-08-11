@@ -8,14 +8,21 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.dnpa_sensorproyect.R;
 import com.example.dnpa_sensorproyect.controller.MaxAmplitudeRecorder;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,16 +36,20 @@ public class MicrophoneActivity extends AppCompatActivity implements MediaPlayer
     MaxAmplitudeRecorder recorder;
     MediaPlayer player;
     MediaPlayer.OnCompletionListener complet = this;
+    private StorageReference mStorageRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_microphone);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         play = (Button)findViewById(R.id.play);
         record = (Button)findViewById(R.id.record);
         stop = (Button)findViewById(R.id.stop);
         stop.setEnabled(false);
         play.setEnabled(false);
         solicitarPermisos();
+
         record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +97,7 @@ public class MicrophoneActivity extends AppCompatActivity implements MediaPlayer
                     player.setOnCompletionListener(complet);
                     try{
                         player.setDataSource(audio.getAbsolutePath());
+                        subirAudio(audio);
                     }catch (IOException e){
                         e.printStackTrace();
                     }
@@ -101,6 +113,28 @@ public class MicrophoneActivity extends AppCompatActivity implements MediaPlayer
             }
         }, msegs);
 
+    }
+
+
+    public void subirAudio(File file){
+        Uri uri_file = Uri.fromFile(file.getAbsoluteFile());
+        StorageReference imgRef = mStorageRef.child("Usuario").child("Audios").child(uri_file.getLastPathSegment());
+
+        imgRef.putFile(uri_file)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get a URL to the uploaded content
+                        Toast.makeText(MicrophoneActivity.this, "Audio subido correctamente.", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Toast.makeText(MicrophoneActivity.this, "No se pudo subir el audio.", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
     }
 
     public boolean permisos(){
